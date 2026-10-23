@@ -1,4 +1,4 @@
-package org.example.sec01.cancel
+package org.example.sec01.lec04.cancel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
