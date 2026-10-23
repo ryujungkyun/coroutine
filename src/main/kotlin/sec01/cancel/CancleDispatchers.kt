@@ -1,0 +1,31 @@
+package org.example.sec01.cancel
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.example.sec01.printWithThread
+import kotlin.coroutines.cancellation.CancellationException
+
+fun main(): Unit = runBlocking {
+    val job = launch(Dispatchers.Default) {
+        var i = 1
+        var nextPrintTime = System.currentTimeMillis()
+        while (isActive && i <= 5) {
+            if (nextPrintTime <= System.currentTimeMillis()) {
+                printWithThread("${i++}번째 출력!")
+                nextPrintTime += 1_000L
+            }
+            /*
+                        if (!isActive) {
+                            throw CancellationException()
+                        }
+            */
+        }
+    }
+
+    delay(100L)
+
+    job.cancel()
+}
